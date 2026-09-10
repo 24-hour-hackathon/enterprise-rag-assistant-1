@@ -1,6 +1,6 @@
-# Enterprise Document QA Assistant - Frontend
+# CONFIGS - Enterprise Document QA Assistant Frontend
 
-A modern, responsive, and enterprise-grade web interface for **Problem Statement JP-020: Enterprise Document Question-Answering Assistant with RAG**.
+A modern, responsive, and enterprise-grade web interface for **CONFIGS Enterprise Document Question-Answering Assistant with RAG**.
 
 ---
 

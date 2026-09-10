@@ -1,0 +1,6 @@
+/* CONFIGS Enterprise UI - Master Stylesheet Bundle */
+@import "css/variables.css";
+@import "css/base.css";
+@import "css/chat.css";
+@import "css/documents.css";
+@import "css/analytics.css";
