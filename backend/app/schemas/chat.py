@@ -22,3 +22,4 @@ class ChatResponse(BaseModel):
     has_answer: bool = Field(..., description="True if answer is supported by the knowledge base")
     sources: List[SourceReference] = Field(default_factory=list, description="List of source citations")
     query_id: Optional[str] = Field(None, description="Logged query ID for auditing")
+    provider: Optional[str] = Field(None, description="Active LLM provider or fallback indicator")

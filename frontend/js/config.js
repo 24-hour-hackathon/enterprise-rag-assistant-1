@@ -1,7 +1,6 @@
 // Global Configuration for CONFIGS Assistant Frontend
-const API_HOST = (typeof window !== "undefined" && window.location && window.location.hostname) ? window.location.hostname : "127.0.0.1";
 const CONFIG = {
-  API_BASE_URL: `http://${API_HOST}:8000`,
+  API_BASE_URL: "https://breaking-pumps-perspectives-interventions.trycloudflare.com",
   ENDPOINTS: {
     HEALTH: "/health",
     CHAT: "/api/chat",

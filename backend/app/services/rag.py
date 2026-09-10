@@ -3,7 +3,7 @@ import logging
 from typing import List, Optional, Tuple
 from app.schemas.chat import ChatResponse, SourceReference
 from app.services.retrieval import retrieval_service, RetrievedChunk
-from app.services.llm import get_llm_provider, LLMProvider
+from app.services.llm import get_llm_provider, LLMProvider, MockLLMProvider
 
 logger = logging.getLogger(__name__)
 
@@ -16,16 +16,25 @@ Keep answers concise, professional, accurate, and directly grounded in the provi
 
 UNSUPPORTED_FALLBACK_TEXT = "I couldn't find sufficient information in the approved knowledge base to answer this question."
 
+QUOTA_EXHAUSTED_FALLBACK_TEXT = "The AI generation service is temporarily unavailable. The relevant source documents were retrieved successfully. Please try again later."
+
 
 class RAGService:
     def __init__(self, llm_provider: Optional[LLMProvider] = None):
         self._llm_provider = llm_provider
+        self._mock_fallback_provider: Optional[MockLLMProvider] = None
 
     @property
     def llm_provider(self) -> LLMProvider:
         if self._llm_provider is None:
             self._llm_provider = get_llm_provider()
         return self._llm_provider
+
+    @property
+    def mock_fallback_provider(self) -> MockLLMProvider:
+        if self._mock_fallback_provider is None:
+            self._mock_fallback_provider = MockLLMProvider()
+        return self._mock_fallback_provider
 
     async def answer_question(
         self,
@@ -38,7 +47,7 @@ class RAGService:
         1. Retrieval of relevant chunks.
         2. Strict relevance/grounding verification.
         3. Prompt synthesis with explicit context citations.
-        4. LLM inference.
+        4. LLM inference with safe demo fallback on quota exhaustion.
         5. Grounding check on generated answer.
         6. Source metadata compilation.
         """
@@ -59,7 +68,8 @@ class RAGService:
             return ChatResponse(
                 answer=UNSUPPORTED_FALLBACK_TEXT,
                 has_answer=False,
-                sources=[]
+                sources=[],
+                provider="gemini"
             ), latency_ms
 
         # Step 3: Construct Grounded Prompt
@@ -93,20 +103,48 @@ class RAGService:
             f"Answer:"
         )
 
-        # Step 4: LLM Generation
+        # Step 4: LLM Generation with Controlled Demo Fallback
+        provider_name = getattr(self.llm_provider, "__class__", type(self.llm_provider)).__name__
+        is_fallback = False
+
         try:
             generated_answer = await self.llm_provider.generate_response(
                 prompt=prompt,
                 system_prompt=SYSTEM_INSTRUCTION
             )
         except Exception as e:
+            err_str = str(e)
             logger.error(f"Error during LLM generation: {e}", exc_info=True)
             latency_ms = round((time.time() - start_time) * 1000, 2)
-            return ChatResponse(
-                answer=f"LLM Generation Error: {str(e)}. Retrieved {len(sources)} relevant sources.",
-                has_answer=False,
-                sources=sources
-            ), latency_ms
+
+            # Detect Gemini 429 / RESOURCE_EXHAUSTED / quota exhaustion
+            if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "quota" in err_str.lower():
+                logger.warning(
+                    "[RAG SAFE FALLBACK] Gemini quota exhausted (429 RESOURCE_EXHAUSTED). "
+                    "Engaging MockLLMProvider controlled demo fallback against retrieved context."
+                )
+                try:
+                    generated_answer = await self.mock_fallback_provider.generate_response(
+                        prompt=prompt,
+                        system_prompt=SYSTEM_INSTRUCTION
+                    )
+                    is_fallback = True
+                except Exception as fallback_err:
+                    logger.error(f"Fallback generation error: {fallback_err}", exc_info=True)
+                    return ChatResponse(
+                        answer=QUOTA_EXHAUSTED_FALLBACK_TEXT,
+                        has_answer=False,
+                        sources=sources,
+                        provider="controlled_demo_fallback"
+                    ), latency_ms
+            else:
+                # Generic fallback for any other generation errors
+                return ChatResponse(
+                    answer="The AI generation service is temporarily unavailable. Please try again later.",
+                    has_answer=False,
+                    sources=sources,
+                    provider=provider_name
+                ), latency_ms
 
         # Step 5: Post-generation Grounding Check
         lower_answer = generated_answer.lower()
@@ -143,7 +181,8 @@ class RAGService:
         return ChatResponse(
             answer=final_answer,
             has_answer=has_answer,
-            sources=final_sources
+            sources=final_sources,
+            provider="controlled_demo_fallback" if is_fallback else provider_name
         ), latency_ms
 
 
