@@ -556,3 +556,8 @@ Project Goal
 
 The goal is to provide a reliable enterprise knowledge assistant that answers questions using approved organizational documents while minimizing unsupported or hallucinated responses.
 
+
+## Live Demo
+
+[CONFIGS Enterprise QA Assistant](https://configs-enterprise-qa.vercel.app/)
+
