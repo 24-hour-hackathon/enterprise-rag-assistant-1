@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise Document QA Assistant | RAG Intelligence</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/chat.css" />
+  <link rel="stylesheet" href="css/documents.css" />
+  <link rel="stylesheet" href="css/analytics.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="#" class="brand-section">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-title">
+          Enterprise QA Assistant
+          <span class="brand-subtitle">Document Grounded RAG</span>
+        </div>
+      </a>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs" role="tablist">
+        <button id="nav-chat-btn" class="nav-tab-btn active" data-tab="chat" role="tab" aria-selected="true">
+          💬 <span>Assistant</span>
+        </button>
+        <button id="nav-documents-btn" class="nav-tab-btn" data-tab="documents" role="tab" aria-selected="false">
+          📂 <span>Knowledge Base</span>
+        </button>
+        <button id="nav-analytics-btn" class="nav-tab-btn" data-tab="analytics" role="tab" aria-selected="false">
+          📊 <span>Evaluation & Stats</span>
+        </button>
+      </nav>
+
+      <!-- System Health Indicator -->
+      <div class="system-status" id="system-status">
+        <div class="status-dot" id="status-dot"></div>
+        <span id="status-text">Checking Backend...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- TAB 1: User Chat Assistant -->
+    <section id="tab-chat" class="tab-content active" role="tabpanel">
+      <div class="chat-layout">
+        <div class="glass-card chat-card">
+          
+          <div class="chat-card-header">
+            <div class="chat-card-title">
+              <span>🤖</span> Enterprise Knowledge Assistant
+            </div>
+            <button id="chat-clear-btn" class="btn btn-secondary" style="padding:0.4rem 0.85rem; font-size:0.78rem;">
+              🗑️ Clear Chat
+            </button>
+          </div>
+
+          <!-- Messages Scroll View -->
+          <div class="chat-messages-container" id="chat-messages">
+            
+            <!-- Welcome Empty State -->
+            <div class="chat-empty-state" id="chat-empty-state">
+              <div class="empty-icon">💡</div>
+              <h2 class="empty-title">Ask Grounded Enterprise Questions</h2>
+              <p class="empty-desc">
+                Answers are generated strictly from approved knowledge base documents with verified source citations. Unsupported questions will not produce fabricated facts.
+              </p>
+
+              <div class="suggestion-grid">
+                <button class="suggestion-btn" data-query="How many vacation days does an employee get every year?">
+                  <span class="label">Leave Policy</span>
+                  "How many vacation days does an employee get every year?"
+                </button>
+                <button class="suggestion-btn" data-query="What is the daily meal allowance during business travel?">
+                  <span class="label">Expense Guidelines</span>
+                  "What is the daily meal allowance during business travel?"
+                </button>
+                <button class="suggestion-btn" data-query="Who is my assigned manager or supervisor?">
+                  <span class="label">Reporting Structure</span>
+                  "Who is my assigned manager or supervisor?"
+                </button>
+                <button class="suggestion-btn" data-query="What is the secret recipe for chocolate chip cookies?">
+                  <span class="label">Anti-Hallucination Test</span>
+                  "What is the recipe for chocolate chip cookies?"
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Query Input Bar -->
+          <div class="chat-input-area">
+            <form id="chat-form" class="chat-input-form">
+              <div class="chat-input-wrapper">
+                <textarea 
+                  id="chat-input" 
+                  class="chat-textarea" 
+                  placeholder="Ask a question about enterprise policies, benefits, or documentation... (Press Enter to submit)"
+                  rows="1"
+                  required
+                ></textarea>
+              </div>
+              <button id="chat-send-btn" type="submit" class="btn btn-primary chat-send-btn">
+                <span>Ask Assistant</span>
+                <span style="font-size:1.1rem;">↗</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Document Management -->
+    <section id="tab-documents" class="tab-content" role="tabpanel">
+      <div class="documents-layout">
+        
+        <div class="documents-header-row">
+          <div>
+            <h1 class="page-title">📂 Enterprise Knowledge Documents</h1>
+            <p class="page-subtitle">Upload, manage, and re-index enterprise knowledge documents (PDF, DOCX, TXT).</p>
+          </div>
+          <span id="doc-total-badge" class="badge badge-info">0 Docs</span>
+        </div>
+
+        <!-- Upload Dropzone -->
+        <div id="upload-dropzone" class="upload-dropzone">
+          <input type="file" id="file-input" class="file-hidden-input" accept=".pdf,.docx,.txt" />
+          <div class="upload-icon">☁️</div>
+          <div class="upload-text-main">Click to select or drag & drop files here</div>
+          <div class="upload-text-sub">Supported formats: PDF (with pages), DOCX, TXT up to 25MB</div>
+
+          <!-- Progress -->
+          <div id="upload-progress" class="upload-progress-wrapper">
+            <div class="upload-progress-bar">
+              <div id="upload-progress-fill" class="upload-progress-fill"></div>
+            </div>
+            <div class="upload-progress-status">
+              <span id="upload-progress-text">Processing document...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documents Table -->
+        <div class="glass-card table-card">
+          <div class="table-toolbar">
+            <div class="table-search-box">
+              <span class="table-search-icon">🔍</span>
+              <input type="text" id="doc-search-input" class="table-search-input" placeholder="Search by document name or ID..." />
+            </div>
+            <button id="doc-refresh-btn" class="btn btn-secondary" style="padding:0.5rem 1rem; font-size:0.84rem;">
+              🔄 Refresh List
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="doc-table">
+              <thead>
+                <tr>
+                  <th>Document Name</th>
+                  <th>Status</th>
+                  <th>Version</th>
+                  <th>Vector Chunks</th>
+                  <th>Indexed Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="doc-table-body">
+                <tr>
+                  <td colspan="6" class="table-empty">Loading documents from knowledge base...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: Evaluation & Stats -->
+    <section id="tab-analytics" class="tab-content" role="tabpanel">
+      <div class="analytics-layout">
+        
+        <div class="documents-header-row">
+          <div>
+            <h1 class="page-title">📊 RAG Evaluation & System Metrics</h1>
+            <p class="page-subtitle">Real-time telemetry, grounding accuracy, and query latency auditing.</p>
+          </div>
+          <button id="analytics-refresh-btn" class="btn btn-secondary" style="padding:0.5rem 1rem; font-size:0.84rem;">
+            🔄 Refresh Metrics
+          </button>
+        </div>
+
+        <!-- KPI Metrics Grid -->
+        <div class="metrics-grid">
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Total Documents</span>
+              <div class="metric-icon-box icon-blue">📄</div>
+            </div>
+            <div id="metric-total-docs" class="metric-value">0</div>
+            <div class="metric-footer">Indexed knowledge assets</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Vector Chunks</span>
+              <div class="metric-icon-box icon-cyan">🧩</div>
+            </div>
+            <div id="metric-total-chunks" class="metric-value">0</div>
+            <div class="metric-footer">In ChromaDB collection</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Total Questions</span>
+              <div class="metric-icon-box icon-purple">💬</div>
+            </div>
+            <div id="metric-total-questions" class="metric-value">0</div>
+            <div class="metric-footer">Logged user queries</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Grounding Rate</span>
+              <div class="metric-icon-box icon-green">🎯</div>
+            </div>
+            <div id="metric-grounded-rate" class="metric-value">100%</div>
+            <div class="metric-footer">Anti-hallucination pass-rate</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Avg. Latency</span>
+              <div class="metric-icon-box icon-orange">⚡</div>
+            </div>
+            <div id="metric-avg-latency" class="metric-value">0 ms</div>
+            <div class="metric-footer">End-to-end RAG latency</div>
+          </div>
+
+        </div>
+
+        <!-- Evaluation Table -->
+        <div class="glass-card table-card">
+          <div class="table-toolbar">
+            <div style="font-weight:700; font-size:0.95rem;">Recent Query Evaluation History</div>
+          </div>
+          <div class="table-responsive">
+            <table class="doc-table">
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>Grounding Status</th>
+                  <th>Latency</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="eval-table-body">
+                <tr>
+                  <td colspan="4" class="table-empty">Loading evaluation history...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/documents.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

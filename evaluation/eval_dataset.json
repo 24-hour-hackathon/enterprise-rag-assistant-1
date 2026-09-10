@@ -1,0 +1,378 @@
+[
+    {
+        "id": 1,
+        "category": "direct",
+        "question": "What is Subramanya's employee ID?",
+        "expected_has_answer": true,
+        "expected_source": "Employee_Handbook.pdf",
+        "expected_behavior": "Return employee ID EMP1024 with has_answer=true and Employee_Handbook.pdf citation",
+        "expected_keywords": [
+            "EMP1024"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 2,
+        "category": "direct",
+        "question": "What is the casual leave entitlement per year?",
+        "expected_has_answer": true,
+        "expected_source": "Leave_Policy.pdf",
+        "expected_behavior": "State 12 days of casual leave per calendar year with Leave_Policy.pdf citation",
+        "expected_keywords": [
+            "12 days",
+            "casual leave"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 3,
+        "category": "direct",
+        "question": "How many working hours are expected weekly?",
+        "expected_has_answer": true,
+        "expected_source": "Employee_Handbook.pdf",
+        "expected_behavior": "State 40 hours per week standard schedule with Employee_Handbook.pdf citation",
+        "expected_keywords": [
+            "40 hours",
+            "working hours"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 4,
+        "category": "direct",
+        "question": "What is the mandatory password renewal policy?",
+        "expected_has_answer": true,
+        "expected_source": "IT_Security.pdf",
+        "expected_behavior": "State passwords must be updated every 90 days with IT_Security.pdf citation",
+        "expected_keywords": [
+            "90 days",
+            "password"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 5,
+        "category": "direct",
+        "question": "What is the policy for expense reimbursement limits on dinners?",
+        "expected_has_answer": true,
+        "expected_source": "Expense_Policy.pdf",
+        "expected_behavior": "State dinner expense reimbursement requirements and receipt submission under Expense_Policy.pdf",
+        "expected_keywords": [
+            "reimbursement",
+            "receipt"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 6,
+        "category": "semantic_paraphrase",
+        "question": "How many vacation days does Subramanya get every year?",
+        "expected_has_answer": true,
+        "expected_source": "Employee_Handbook.pdf",
+        "expected_behavior": "Identify 18 days vacation / annual leave entitlement under paraphrased phrasing",
+        "expected_keywords": [
+            "18 days",
+            "annual leave"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 7,
+        "category": "semantic_paraphrase",
+        "question": "How many casual days off do employees get each year?",
+        "expected_has_answer": true,
+        "expected_source": "Leave_Policy.pdf",
+        "expected_behavior": "Identify 12 days casual leave under paraphrased phrasing",
+        "expected_keywords": [
+            "12 days",
+            "casual leave"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 8,
+        "category": "semantic_paraphrase",
+        "question": "What is the standard scheduled work commitment per week?",
+        "expected_has_answer": true,
+        "expected_source": "Employee_Handbook.pdf",
+        "expected_behavior": "Identify 40 hours weekly requirement from Employee_Handbook.pdf under semantic variance",
+        "expected_keywords": [
+            "40 hours"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 9,
+        "category": "semantic_paraphrase",
+        "question": "How frequently do staff need to change their login passwords?",
+        "expected_has_answer": true,
+        "expected_source": "IT_Security.pdf",
+        "expected_behavior": "Identify 90 days password rotation policy from IT_Security.pdf under rephrased query",
+        "expected_keywords": [
+            "90 days"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 10,
+        "category": "unsupported",
+        "question": "What is Subramanya's salary?",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Refuse confidential salary query with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "not available",
+            "cannot find",
+            "not mentioned",
+            "confidential"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 11,
+        "category": "unsupported",
+        "question": "Can employees bring their pet dogs to the office headquarters?",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Refuse undocumented pet policy query with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "not available",
+            "not mentioned",
+            "cannot find"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 12,
+        "category": "unsupported",
+        "question": "What is the annual salary of the CEO?",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Refuse executive compensation query with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "not available",
+            "cannot find",
+            "not mentioned"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 13,
+        "category": "unsupported",
+        "question": "What is the stock option vesting schedule for summer interns?",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Refuse unsupported intern equity query with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "not available",
+            "not mentioned",
+            "cannot find"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 14,
+        "category": "out_of_domain",
+        "question": "What is the recipe for chocolate chip cookies?",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Refuse baking recipe query with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "not available",
+            "outside",
+            "scope",
+            "company documentation",
+            "internal"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 15,
+        "category": "out_of_domain",
+        "question": "What is the capital city of France?",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Refuse geography query with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "not available",
+            "outside",
+            "scope",
+            "company documentation",
+            "internal"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 16,
+        "category": "out_of_domain",
+        "question": "Who won the FIFA World Cup in 2022?",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Refuse sports trivia query with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "not available",
+            "outside",
+            "scope",
+            "company documentation",
+            "internal"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 17,
+        "category": "source_citation",
+        "question": "According to company records, which document specifies casual leave days?",
+        "expected_has_answer": true,
+        "expected_source": "Leave_Policy.pdf",
+        "expected_behavior": "Return Leave_Policy.pdf in sources and cite Leave_Policy.pdf in answer",
+        "expected_keywords": [
+            "12 days",
+            "Leave_Policy.pdf"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 18,
+        "category": "source_citation",
+        "question": "Where is the password expiration duration defined in company documentation?",
+        "expected_has_answer": true,
+        "expected_source": "IT_Security.pdf",
+        "expected_behavior": "Return IT_Security.pdf in sources and cite IT_Security.pdf in answer",
+        "expected_keywords": [
+            "90 days",
+            "IT_Security.pdf"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 19,
+        "category": "source_citation",
+        "question": "Which document governs weekly employee working hours?",
+        "expected_has_answer": true,
+        "expected_source": "Employee_Handbook.pdf",
+        "expected_behavior": "Return Employee_Handbook.pdf in sources and cite Employee_Handbook.pdf in answer",
+        "expected_keywords": [
+            "40 hours",
+            "Employee_Handbook.pdf"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": null
+    },
+    {
+        "id": 20,
+        "category": "empty_invalid",
+        "question": "",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Reject empty string safely with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "valid question",
+            "please provide",
+            "empty"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 21,
+        "category": "empty_invalid",
+        "question": "    ",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Reject whitespace query safely with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "valid question",
+            "please provide",
+            "empty"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 22,
+        "category": "empty_invalid",
+        "question": "!@#$%^&*()_+{}[]:;",
+        "expected_has_answer": false,
+        "expected_source": "NOT AVAILABLE",
+        "expected_behavior": "Reject nonsensical symbols safely with has_answer=false and sources=[]",
+        "expected_keywords": [
+            "valid question",
+            "please provide",
+            "rephrase"
+        ],
+        "is_unanswerable": true,
+        "consistency_group": null
+    },
+    {
+        "id": 23,
+        "category": "reindex_consistency",
+        "question": "What is Subramanya's employee ID?",
+        "expected_has_answer": true,
+        "expected_source": "Employee_Handbook.pdf",
+        "expected_behavior": "Run A: Return EMP1024 with has_answer=true and Employee_Handbook.pdf",
+        "expected_keywords": [
+            "EMP1024"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": "subramanya_id_consistency"
+    },
+    {
+        "id": 24,
+        "category": "reindex_consistency",
+        "question": "What is Subramanya's employee ID?",
+        "expected_has_answer": true,
+        "expected_source": "Employee_Handbook.pdf",
+        "expected_behavior": "Run B: Identical response and sources matching Run A across re-indexing",
+        "expected_keywords": [
+            "EMP1024"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": "subramanya_id_consistency"
+    },
+    {
+        "id": 25,
+        "category": "reindex_consistency",
+        "question": "What is the casual leave entitlement per year?",
+        "expected_has_answer": true,
+        "expected_source": "Leave_Policy.pdf",
+        "expected_behavior": "Run A: Return 12 days casual leave with has_answer=true and Leave_Policy.pdf",
+        "expected_keywords": [
+            "12 days",
+            "casual leave"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": "casual_leave_consistency"
+    },
+    {
+        "id": 26,
+        "category": "reindex_consistency",
+        "question": "What is the casual leave entitlement per year?",
+        "expected_has_answer": true,
+        "expected_source": "Leave_Policy.pdf",
+        "expected_behavior": "Run B: Identical response and sources matching Run A across re-indexing",
+        "expected_keywords": [
+            "12 days",
+            "casual leave"
+        ],
+        "is_unanswerable": false,
+        "consistency_group": "casual_leave_consistency"
+    }
+]

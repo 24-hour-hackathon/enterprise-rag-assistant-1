@@ -1,0 +1,17 @@
+COMPANY EMPLOYEE HANDBOOK & GENERAL INFORMATION
+
+Employee Profile
+Name: Subramanya
+Employee ID: EMP1024
+Role: Senior Systems Engineer
+Department: Software Development and Platform Infrastructure
+Manager: Priya Sharma
+Work Location: Bengaluru
+
+Standard Working Hours
+The standard schedule requires 40 hours per week, Monday to Friday from 9:00 AM to 6:00 PM with 1 hour lunch break.
+Employees are expected to adhere to standard weekly working hours.
+
+Vacation and Annual Leave Policy
+Employees are entitled to 18 days of annual leave per calendar year.
+Leave requests must be submitted at least 3 business days in advance.

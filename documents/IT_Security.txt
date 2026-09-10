@@ -1,0 +1,9 @@
+CORPORATE IT AND INFORMATION SECURITY POLICY
+
+Mandatory Password Policy
+All employee passwords must be changed every 90 days without exception.
+Passwords must be at least 12 characters in length and include uppercase, lowercase, numbers, and special symbols.
+
+Authentication and Workstations
+Multi-factor authentication (MFA) is mandatory on all corporate workstations and VPN access.
+Employees must lock their computer screens when leaving their workstations unattended.
